@@ -12,6 +12,13 @@ jobs:
     outputs:
       has-secrets: ${{ steps.check.outputs.has-secrets }}
     steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
+        with:
+          use-policy-store: true
+          egress-policy: audit
+          api-key: ${{ secrets.STEP_SECURITY_API_KEY }}
+
       - name: "Check for secrets"
         id: check
         shell: bash
@@ -32,6 +39,13 @@ jobs:
         node-version: [18]
 
     steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
+        with:
+          use-policy-store: true
+          egress-policy: audit
+          api-key: ${{ secrets.STEP_SECURITY_API_KEY }}
+
       - uses: actions/checkout@v4
         with:
           # pulls all commits (needed for lerna / semantic release to correctly version)
